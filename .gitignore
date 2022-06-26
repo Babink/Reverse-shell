@@ -1,6 +1,6 @@
-build
-dist
-reverse_shell.spec
+#build
+#dist
+#reverse_shell.spec
 
 /reverse_shell.py
 /server.py
