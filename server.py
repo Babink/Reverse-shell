@@ -30,6 +30,8 @@ def shell():
 		
 		if command == 'q':
 			break
+		elif command[:2] == "cd" and len(command) > 1:
+			continue
 		else:
 			result = json_recv()
 			print(result)
